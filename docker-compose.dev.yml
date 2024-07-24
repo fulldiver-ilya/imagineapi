@@ -27,6 +27,7 @@ services:
       DB_DATABASE: imagineapi
       DB_USER: postgres
 
+      ADMIN_ROLE_ID: 0ebbd2c2-0d46-402c-8a87-939024e6abab
       STANDARD_ROLE_ID: 09c04dcf-5a1b-4583-b900-b259fa32dffa
       CONSUMER_ROLE_ID: 28cd8ba9-5485-4f52-80e6-04c91c827b09
 
@@ -48,7 +49,7 @@ services:
       context: ./rabbitmq
       dockerfile: Dockerfile
     environment:
-      RABBITMQ_DEFAULT_VHOST: '/'
+      RABBITMQ_DEFAULT_VHOST: "/"
       RABBITMQ_NODENAME: rabbit@localhost
     env_file:
       - ./.shared.env
@@ -90,7 +91,6 @@ services:
       - AUTOHEAL_CONTAINER_LABEL=all
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
 
 volumes:
   proc_info:
