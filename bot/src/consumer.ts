@@ -715,7 +715,21 @@ export const ConnectionPool: WsConnectionPool = {};
 
           return nextData;
         },
-        login: async (context, event): Promise<void | { next: string }> => {
+        login: async (context, event): Promise<
+        | void 
+        | { next: string }
+        | { next: string, userId: string, token: string }
+        > => {
+          if (process.env.DISCORD_USER_ID && process.env.DISCORD_TOKEN) {
+            logger.debug("Using DISCORD_USER_ID and DISCORD_TOKEN from env");
+
+            return {
+              next: "authenticated",
+              userId: process.env.DISCORD_USER_ID,
+              token: process.env.DISCORD_TOKEN,
+            };
+          }
+
           invariant(process.env.DISCORD_EMAIL, "DISCORD_EMAIL not set");
           invariant(process.env.DISCORD_PASSWORD, "DISCORD_PASSWORD not set");
           invariant(context.loginPage, "loginPage is null");
